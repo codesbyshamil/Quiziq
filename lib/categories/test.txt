@@ -1,0 +1,130 @@
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:core';
+import 'package:intl/intl.dart';
+
+class Result extends StatefulWidget {
+  @override
+  _ResultState createState() => _ResultState();
+}
+
+class _ResultState extends State<Result> {
+  List<int> userScores = [];
+  List<String?> datetimes = [];
+  String? datetime;
+
+  @override
+  void initState() {
+    super.initState();
+    getUserScores();
+    getDatetime();
+  }
+
+  Future<void> getUserScores() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userScoresString = prefs.getString('user_scores');
+
+    if (userScoresString != null) {
+      setState(() {
+        userScores = userScoresString
+            .split(',')
+            .map((s) => int.tryParse(s) ?? 0)
+            .toList();
+      });
+    }
+  }
+
+  Future<void> getDatetime() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    datetime = prefs.getString('datetime');
+
+    if (datetime != null) {
+      final parsedDatetime = DateTime.parse(datetime!);
+      final formattedDatetime =
+          DateFormat('dd MMMM yyyy, hh:mm:ss').format(parsedDatetime);
+      setState(() {
+        datetime = formattedDatetime;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Results'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: userScores.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: ShapeDecoration(
+                        shape: RoundedRectangleBorder(
+                          side: BorderSide(
+                            width: 2,
+                            strokeAlign: BorderSide.strokeAlignOutside,
+                            color: Color(0xFFA32EC1),
+                          ),
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      height: 60,
+                      child: ListTile(
+                        title: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  child: Text(
+                                    '${index + 1}',
+                                    style: TextStyle(fontSize: 25),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                SizedBox(width: 10),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                        child: Text(
+                                      'Score: ${userScores[index]}',
+                                      style: TextStyle(fontSize: 18),
+                                    )),
+                                    Container(
+                                        child: Text(
+                                      'Category name:',
+                                      style: TextStyle(fontSize: 18),
+                                    )),
+                                  ],
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(bottom: 22),
+                                  child: Text(
+                                    '${datetime}',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

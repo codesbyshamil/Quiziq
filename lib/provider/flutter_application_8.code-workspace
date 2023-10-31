@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../../../flutter_application_8"
+		},
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive"
+	}
+}
