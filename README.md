@@ -31,8 +31,13 @@ Follow these steps to run the app locally:
    ```bash
    git clone https://github.com/your-username/QuizIQ.git
 
+### Usage
+1. Connect your device/emulator.
+2. Run the app:
+   ```bash
+   flutter run
 
-Screenshots 📷
+### Screenshots 📷
 [Include app screenshots here to showcase different features and functionalities]
 
 Contributions 🤝
