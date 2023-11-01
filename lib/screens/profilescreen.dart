@@ -1,10 +1,14 @@
 //import 'package:Quiz/screens/test.dart';
+import 'package:Quiz/provider/provider.dart';
 import 'package:animated_switch/animated_switch.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:Quiz/screens/loginscreen.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -16,7 +20,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   late SharedPreferences logindata;
   late String username = '';
-
+  late User? _user;
   TextEditingController _usernameController = TextEditingController();
   final LocalAuthentication auth = LocalAuthentication();
   // ignore: unused_field
@@ -35,6 +39,7 @@ class _ProfileState extends State<Profile> {
               ? _SupportState.supported
               : _SupportState.unsupported),
         );
+    _fetchUserData();
   }
 
   void initial() async {
@@ -74,6 +79,12 @@ class _ProfileState extends State<Profile> {
     setState(() {
       username = newUsername;
     });
+  }
+
+  Future<void> _fetchUserData() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    _user = auth.currentUser;
+    setState(() {}); // Update the UI after fetching user data
   }
 
   void saveFingerprintAuthPreference(bool enabled) async {
@@ -128,6 +139,10 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final String? photoUrl = user?.photoURL;
+    // Provider.of<Providers>(context).getUsername();
     return Scaffold(
       appBar: AppBar(
         title: Text('Profile'),
@@ -163,25 +178,34 @@ class _ProfileState extends State<Profile> {
                         children: [
                           Column(
                             children: [
-                              Container(
-                                margin: EdgeInsets.only(top: 10),
-                                width: 100,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                    image: AssetImage(
-                                        'assets/images/profile1.png'),
-                                  ),
-                                  color: Colors.amber,
-                                ),
+                              CircleAvatar(
+                                radius: 50,
+                                backgroundImage: photoUrl != null
+                                    ? NetworkImage(photoUrl)
+                                    : AssetImage('assets/images/profile1.png')
+                                        as ImageProvider,
                               ),
+                              // Container(
+                              //   margin: EdgeInsets.only(top: 10),
+                              //   width: 100,
+                              //   height: 100,
+                              //   decoration: BoxDecoration(
+                              //     shape: BoxShape.circle,
+                              //     image: DecorationImage(
+                              //       image: AssetImage(
+                              //           'assets/images/profile1.png'),
+                              //     ),
+                              //     color: Colors.amber,
+                              //   ),
+                              // ),
                               Container(
                                 margin: EdgeInsets.only(top: 10),
                                 child: Column(
                                   children: [
                                     Text(
-                                      '$username',
+                                      _user != null
+                                          ? '${_user!.displayName}'
+                                          : '$username',
                                       style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500,
@@ -286,6 +310,7 @@ class _ProfileState extends State<Profile> {
                             builder: (BuildContext context) => LoginPage()),
                         ModalRoute.withName('/'),
                       );
+                      signOut();
                     },
                     child: Row(
                       children: [
@@ -305,6 +330,20 @@ class _ProfileState extends State<Profile> {
         ),
       ),
     );
+  }
+
+  Future<void> signOut() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+
+    try {
+      // Sign out from Firebase
+      await _auth.signOut();
+
+      await googleSignIn.signOut();
+    } catch (e) {
+      print("Error occurred during sign-out: $e");
+    }
   }
 }
 

@@ -126,7 +126,7 @@ class _ScienceState extends State<Science> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          color: Color.fromARGB(255, 217, 2, 2),
+                          color: Color.fromARGB(255, 219, 55, 55),
                           shadows: [
                             BoxShadow(
                               color: Color.fromARGB(255, 191, 191, 191),

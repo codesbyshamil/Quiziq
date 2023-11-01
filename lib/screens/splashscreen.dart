@@ -1,6 +1,7 @@
 import 'package:Quiz/screens/homescreen.dart';
 import 'package:Quiz/screens/loginscreen.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -23,10 +24,14 @@ class _SplashPageState extends State<SplashPage> {
   Future<void> checkIfAlreadyLogin() async {
     var loginData = await SharedPreferences.getInstance();
     isNewUser = loginData.getBool('login');
-
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
     await Future.delayed(Duration(seconds: 2));
 
-    if (isNewUser == null || isNewUser == true) {
+    if (user != null) {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) => Homepage()));
+    } else if (isNewUser == null || isNewUser == true) {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
         builder: (context) => LoginPage(),
       ));

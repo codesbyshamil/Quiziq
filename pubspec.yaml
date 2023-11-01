@@ -44,6 +44,9 @@ dependencies:
   fluttertoast: ^8.2.2
   cloud_firestore: ^4.12.1
   firebase_storage: ^11.4.0
+  google_sign_in: ^6.1.5
+  github_sign_in: ^0.0.5-dev.4
+  otpless_flutter: 2.0.0
 
 dev_dependencies:
   flutter_test:

@@ -207,7 +207,7 @@ class _QuizState extends State<Quiz> {
                             margin: EdgeInsets.only(top: 200),
                             alignment: Alignment.center,
                             child: SizedBox(
-                              width: 350,
+                              width: 320,
                               child: Text(
                                 currentQuestionIndex < quizData.length
                                     ? quizData[currentQuestionIndex]['question']
@@ -267,7 +267,7 @@ class _QuizState extends State<Quiz> {
                                   Text(
                                     answer,
                                     style: TextStyle(
-                                        fontSize: 25,
+                                        fontSize: 23,
                                         color:
                                             Color.fromARGB(255, 80, 93, 100)),
                                   ),

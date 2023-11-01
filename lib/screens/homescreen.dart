@@ -11,6 +11,7 @@ import 'package:Quiz/screens/leaderboard.dart';
 //import 'package:Quiz/screens/leaderboard.dart';
 import 'package:Quiz/screens/profilescreen.dart';
 import 'package:Quiz/screens/results.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:Quiz/screens/test.dart';
 import 'package:flutter/material.dart';
 import 'package:Quiz/categories/Gk.dart';
@@ -40,7 +41,7 @@ class _HomepageState extends State<Homepage> {
   // ignore: unused_field
   bool? _canCheckBiometrics;
   _SupportState _supportState = _SupportState.unknown;
-
+  late User? _user;
   @override
   void initState() {
     super.initState();
@@ -51,6 +52,7 @@ class _HomepageState extends State<Homepage> {
               ? _SupportState.supported
               : _SupportState.unsupported),
         );
+    _fetchUserData();
   }
 
   // ignore: unused_element
@@ -69,6 +71,12 @@ class _HomepageState extends State<Homepage> {
     setState(() {
       _canCheckBiometrics = canCheckBiometrics;
     });
+  }
+
+  Future<void> _fetchUserData() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    _user = auth.currentUser;
+    setState(() {}); // Update the UI after fetching user data
   }
 
   Future<void> _authenticate() async {
@@ -117,7 +125,6 @@ class _HomepageState extends State<Homepage> {
         () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
 
     if (authenticated) {
-
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => Result(),
@@ -165,6 +172,9 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final String? photoUrl = user?.photoURL;
     Provider.of<Providers>(context).getUsername();
     return FutureBuilder<int>(
         future: getTotalScoreFromSharedPreferences(),
@@ -233,10 +243,11 @@ class _HomepageState extends State<Homepage> {
                                                   ),
                                                 ],
                                               ),
-                                              
                                               Container(
                                                 child: Text(
-                                                  'Hi, $username',
+                                                  _user != null
+                                                      ? 'Hi, ${_user!.displayName}'
+                                                      : 'Hi, $username',
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 35,
@@ -268,16 +279,15 @@ class _HomepageState extends State<Homepage> {
                                                       Profile()),
                                             );
                                           },
-                                          child: Container(
-                                            width: 60,
-                                            height: 60,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/images/profile1.png'),
-                                                  fit: BoxFit.cover),
-                                              color: Colors.transparent,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: CircleAvatar(
+                                              radius: 32,
+                                              backgroundImage: photoUrl != null
+                                                  ? NetworkImage(photoUrl)
+                                                  : AssetImage(
+                                                          'assets/images/profile1.png')
+                                                      as ImageProvider,
                                             ),
                                           ),
                                         ),
