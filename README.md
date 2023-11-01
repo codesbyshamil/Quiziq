@@ -40,7 +40,7 @@ Follow these steps to run the app locally:
 ### Screenshots 📷
 [Include app screenshots here to showcase different features and functionalities]
 
-Contributions 🤝
+### Contributions 🤝
 Contributions are welcome! If you'd like to contribute to the project, follow these steps:
 
 Fork the repository.
@@ -52,7 +52,7 @@ Create a Pull Request.
 License 📜
 This project is licensed under the [License Name] - see the LICENSE.md file for details.
 
-Acknowledgements 🙌
+### Acknowledgements 🙌
 [Optional: Acknowledge individuals, resources, or projects that inspired or helped you during the development.]
 
 Feel free to update this README with additional details, instructions, or sections as needed.
