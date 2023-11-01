@@ -1,6 +1,6 @@
-# flutter_application_9
+# Quiziq
 
-A new Flutter project.
+An Flutter Quiz application.
 
 ## Getting Started
 
