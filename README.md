@@ -1,16 +1,32 @@
-# Quiziq
+# QuizIQ
 
-An Flutter Quiz application.
+QuizIQ is a feature-rich quiz mobile application developed using Flutter. It offers various functionalities for users to take quizzes, authenticate via Firebase, view results, and utilize fingerprint authentication to access their scores.
+
+## Features
+
+- **Firebase Authentication:** Utilizes Firebase authentication for secure user login and authentication.
+- **Quiz Taking:** Users can take quizzes on various topics and subjects.
+- **Result Viewing:** Provides a platform to view quiz results after completion.
+- **Fingerprint Authentication:** Offers an additional layer of security, allowing users to use their fingerprint to access their quiz results.
+
+## Technologies Used
+
+- **Flutter:** Framework for building the mobile application.
+- **Firebase:** Integration for user authentication and data storage.
+- **Local Authentication:** Utilized for fingerprint authentication.
+- **Other Flutter Libraries:** [Insert other significant libraries or tools used in the development process]
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Follow these steps to run the app locally:
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Make sure you have Flutter installed. If not, refer to the [Flutter installation guide](https://flutter.dev/docs/get-started/install).
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/your-username/QuizIQ.git
