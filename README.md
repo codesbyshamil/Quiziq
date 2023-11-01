@@ -1,4 +1,4 @@
-# QuizIQ
+# Quiziq
 
 QuizIQ is a feature-rich quiz mobile application developed using Flutter. It offers various functionalities for users to take quizzes, authenticate via Firebase, view results, and utilize fingerprint authentication to access their scores.
 
