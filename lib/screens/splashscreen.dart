@@ -1,5 +1,7 @@
-import 'package:Quiz/screens/homescreen.dart';
-import 'package:Quiz/screens/loginscreen.dart';
+import 'package:Quiziq/screens/connectivity.dart';
+import 'package:Quiziq/screens/homescreen.dart';
+import 'package:Quiziq/screens/loginscreen.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,11 +21,11 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     checkIfAlreadyLogin();
+  
   }
 
+ 
   Future<void> checkIfAlreadyLogin() async {
-    var loginData = await SharedPreferences.getInstance();
-    isNewUser = loginData.getBool('login');
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user = auth.currentUser;
     await Future.delayed(Duration(seconds: 2));
@@ -31,13 +33,9 @@ class _SplashPageState extends State<SplashPage> {
     if (user != null) {
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) => Homepage()));
-    } else if (isNewUser == null || isNewUser == true) {
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (context) => LoginPage(),
-      ));
     } else {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => Homepage()));
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (context) => LoginPage()));
     }
   }
 

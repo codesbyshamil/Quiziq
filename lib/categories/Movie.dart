@@ -1,9 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:Quiz/screens/homescreen.dart';
+import 'package:Quiziq/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
-import 'package:Quiz/screens/scorescreen.dart';
+import 'package:Quiziq/screens/scorescreen.dart';
 import 'package:vibration/vibration.dart';
 
 class Movie extends StatefulWidget {

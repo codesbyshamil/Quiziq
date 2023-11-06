@@ -1,20 +1,20 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:Quiz/categories/Maths.dart';
-import 'package:Quiz/categories/Movie.dart';
-import 'package:Quiz/categories/Science.dart';
-import 'package:Quiz/categories/Sports.dart';
-import 'package:Quiz/categories/Tech.dart';
+import 'package:Quiziq/categories/Maths.dart';
+import 'package:Quiziq/categories/Movie.dart';
+import 'package:Quiziq/categories/Science.dart';
+import 'package:Quiziq/categories/Sports.dart';
+import 'package:Quiziq/categories/Tech.dart';
 //import 'package:Quiz/main.dart';
-import 'package:Quiz/provider/provider.dart';
-import 'package:Quiz/screens/leaderboard.dart';
+import 'package:Quiziq/provider/provider.dart';
+import 'package:Quiziq/screens/leaderboard.dart';
 //import 'package:Quiz/screens/leaderboard.dart';
-import 'package:Quiz/screens/profilescreen.dart';
-import 'package:Quiz/screens/results.dart';
+import 'package:Quiziq/screens/profilescreen.dart';
+import 'package:Quiziq/screens/results.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:Quiz/screens/test.dart';
 import 'package:flutter/material.dart';
-import 'package:Quiz/categories/Gk.dart';
+import 'package:Quiziq/categories/Gk.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -458,6 +458,9 @@ class _HomepageState extends State<Homepage> {
                                     SizedBox(width: 10),
                                     GestureDetector(
                                       onTap: () {
+                                        int userScore =
+                                            20; // Example score value
+
                                         // _authenticate();
                                         Navigator.push(
                                           context,
@@ -493,7 +496,7 @@ class _HomepageState extends State<Homepage> {
                                               Text(
                                                 'Leaderboard',
                                                 style: TextStyle(
-                                                  fontSize: 20,
+                                                  fontSize: 17,
                                                   fontWeight: FontWeight.w400,
                                                 ),
                                               ),

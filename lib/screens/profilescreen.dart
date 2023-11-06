@@ -1,12 +1,12 @@
 //import 'package:Quiz/screens/test.dart';
-import 'package:Quiz/provider/provider.dart';
+// import 'package:Quiziq/provider/provider.dart';
 import 'package:animated_switch/animated_switch.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:Quiz/screens/loginscreen.dart';
+import 'package:Quiziq/screens/loginscreen.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

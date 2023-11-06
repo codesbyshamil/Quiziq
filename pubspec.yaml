@@ -1,4 +1,4 @@
-name: Quiz
+name: Quiziq
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -47,6 +47,13 @@ dependencies:
   google_sign_in: ^6.1.5
   github_sign_in: ^0.0.5-dev.4
   otpless_flutter: 2.0.0
+  pinput: ^3.0.1
+  lottie: ^2.7.0
+  flutter_facebook_auth: ^5.0.11
+  modal_progress_hud_nsn: ^0.4.0
+  flutter_firebase_recaptcha: ^1.0.2
+  flutter_gcaptcha_v3: ^2.0.0
+  connectivity: ^3.0.6
 
 dev_dependencies:
   flutter_test:
@@ -83,6 +90,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
      - assets/images/
+     - assets/lottie/
      
   #   - images/a_dot_ham.jpeg
 

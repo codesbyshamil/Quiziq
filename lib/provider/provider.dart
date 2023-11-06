@@ -1,8 +1,10 @@
-import 'package:Quiz/screens/homescreen.dart';
-import 'package:Quiz/screens/results.dart';
+import 'package:Quiziq/screens/homescreen.dart';
+import 'package:Quiziq/screens/results.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vibration/vibration.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Providers extends ChangeNotifier {
   Color _currentColor = Colors.blue;
@@ -86,16 +88,16 @@ class Providers extends ChangeNotifier {
     notifyListeners();
   }
 
-  void clearResults() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('user_scores');
-    prefs.remove('category');
-    prefs.remove('storedTimes');
-    userScores.clear();
-    categories.clear;
-    storedTimes.clear();
-    notifyListeners();
-  }
+  // void clearResults() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.remove('user_scores');
+  //   prefs.remove('category');
+  //   prefs.remove('storedTimes');
+  //   userScores.clear();
+  //   categories.clear;
+  //   storedTimes.clear();
+  //   notifyListeners();
+  // }
 
   void sortResults(String option) {
     var sortByOption = option;
