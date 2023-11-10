@@ -303,7 +303,7 @@ class _MathsState extends State<Maths> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          Homepage(), // Navigate to the QuizPage
+                          Homepage(enableFingerprint: true), // Navigate to the QuizPage
                     ),
                   ); // Allow back button press
                 },

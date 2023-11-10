@@ -1,5 +1,8 @@
+import 'package:Quiziq/screens/connectivity.dart';
 import 'package:Quiziq/screens/homescreen.dart';
 import 'package:Quiziq/screens/loginscreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:pinput/pinput.dart';
@@ -23,11 +26,51 @@ class _OTPScreenState extends State<OTPScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   TextEditingController _phoneNumberController = TextEditingController();
   TextEditingController _smsCodeController = TextEditingController();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   String verificationId = '';
   bool otpSent = false; // To track if OTP has been sent
   bool showSpinner = false;
+  String connectionStatus = 'Unknown';
+  Future<bool> checkPhoneNumberInFirestore(String phoneNumber) async {
+    try {
+      // Check if the provided phone number exists in Firestore
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('Results')
+          .where('PhoneNumber', isEqualTo: phoneNumber)
+          .get();
+
+      return querySnapshot.docs.isNotEmpty;
+    } catch (e) {
+      print('Error: $e');
+      return false;
+    }
+  }
+
+  Future<void> checkConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        connectionStatus = 'No internet connection';
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => InternetCheckWidget(),
+        ));
+      });
+    } else {}
+  }
+
   Future<void> verifyPhone() async {
+    bool phoneNumberExists =
+        await checkPhoneNumberInFirestore('+91${_phoneNumberController.text}');
+
+    if (!phoneNumberExists) {
+      setState(() {
+        errorMsg = 'Please register your phone number';
+        showSpinner = false;
+      });
+      return;
+    }
     final PhoneVerificationCompleted verified = (AuthCredential authResult) {
       _auth.signInWithCredential(authResult);
     };
@@ -46,13 +89,6 @@ class _OTPScreenState extends State<OTPScreen> {
       setState(() {
         otpSent = true;
         showSpinner = false;
-        // Update state to show the OTP input field
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => otpverify(),
-        //   ),
-        // );
       });
     } as PhoneCodeSent;
 
@@ -113,12 +149,12 @@ class _OTPScreenState extends State<OTPScreen> {
                           otpSent
                               ? Lottie.asset(
                                   'assets/lottie/animation_log0bztv.json',
-                                  width: 250,
-                                  height: 250)
+                                  width: 280,
+                                  height: 280)
                               : Lottie.asset(
                                   'assets/lottie/animation_lofz8wqx.json',
-                                  width: 250,
-                                  height: 250),
+                                  width: 300,
+                                  height: 300),
                           // Lottie.network(
                           //     'https://raw.githubusercontent.com/xvrh/lottie-flutter/master/example/assets/Mobilo/A.json'),
                           otpSent
@@ -264,14 +300,50 @@ class _OTPScreenState extends State<OTPScreen> {
         smsCode: _smsCodeController.text,
       );
 
-      await _auth.signInWithCredential(credential);
-      print('User signed in');
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => Homepage(),
-        ),
-      );
+      UserCredential userCredential =
+          await _auth.signInWithCredential(credential);
+      User? user = userCredential.user;
+
+      if (user != null) {
+        String phoneNumber = '+91${_phoneNumberController.text}';
+
+        QuerySnapshot querySnapshot = await _firestore
+            .collection('Results')
+            .where('PhoneNumber', isEqualTo: phoneNumber)
+            .get();
+
+        if (querySnapshot.docs.isNotEmpty) {
+          // User with the provided phone number exists
+          String userId = querySnapshot.docs.first.id;
+
+          // Accessing user data from Firestore
+          var userData = querySnapshot.docs.first.data();
+
+          // Now userData contains all the information about the user
+          print('User logged in with ID: $userId');
+          print('User Data: $userData');
+
+          // Navigate to the home screen after successful login
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Homepage(enableFingerprint: true),
+            ),
+          );
+        } else {
+          // User with the provided phone number doesn't exist
+          print('User with this phone number does not exist');
+          setState(() {
+            errorMessage = 'Invalid OTP or User not found.';
+          });
+        }
+      } else {
+        // Handle the case when user is null
+        print('User is null');
+        setState(() {
+          errorMessage = 'Invalid OTP, Please try again.';
+        });
+      }
     } catch (e) {
       print('Failed to sign in: $e');
       setState(() {

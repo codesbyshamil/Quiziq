@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lottie/lottie.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 const kTextFieldDecoration = InputDecoration(
   hintText: 'Enter a value',
@@ -29,9 +30,11 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
+  final _firestore = FirebaseFirestore.instance;
   late String email;
   late String password;
   late String username;
+  late String Phonenumber;
   bool showSpinner = false;
   String errormsg = '';
 
@@ -61,6 +64,33 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                     ),
                     SizedBox(height: 15),
                     TextField(
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+                        username = value;
+                        // Do something with the user input.
+                      },
+                      decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Enter your Full Name',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    TextField(
+                      obscureText: true,
+                      textAlign: TextAlign.center,
+                      onChanged: (value) {
+                        Phonenumber = value;
+                        // Do something with the user input.
+                      },
+                      decoration: kTextFieldDecoration.copyWith(
+                        hintText: 'Enter your Phone Number',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    TextField(
                       keyboardType: TextInputType.emailAddress,
                       textAlign: TextAlign.center,
                       onChanged: (value) {
@@ -68,7 +98,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         // Do something with the user input.
                       },
                       decoration: kTextFieldDecoration.copyWith(
-                        hintText: 'Enter your email',
+                        hintText: 'Enter your Email',
                       ),
                     ),
                     SizedBox(
@@ -82,24 +112,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         // Do something with the user input.
                       },
                       decoration: kTextFieldDecoration.copyWith(
-                        hintText: 'Enter your Password',
+                        hintText: 'Enter Password For account',
                       ),
                     ),
                     SizedBox(
                       height: 8.0,
-                    ),
-                    TextField(
-                      textAlign: TextAlign.center,
-                      onChanged: (value) {
-                        username = value;
-                        // Do something with the user input.
-                      },
-                      decoration: kTextFieldDecoration.copyWith(
-                        hintText: 'Enter your Username',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
                     ),
                     Text(errormsg),
                     SizedBox(
@@ -121,11 +138,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             // Additional code to set the username after registration
                             await _auth.currentUser!
                                 .updateDisplayName(username);
-
+                            await _auth.currentUser!.sendEmailVerification();
+                            await _firestore
+                                .collection('Results')
+                                .doc(newUser.user!.uid)
+                                .set({
+                              'Name': username,
+                              'Email': email,
+                              'PhoneNumber': '+91${Phonenumber}',
+                              // Add more user details if needed
+                            });
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => Homepage(),
+                                builder: (context) =>
+                                    Homepage(enableFingerprint: true),
                               ),
                             );
                           }
@@ -155,6 +182,30 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 }
 
+// class Verifyotp extends StatelessWidget {
+//   Verifyotp({super.key});
+//   final _auth = FirebaseAuth.instance;
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       body: Center(
+//           child: ElevatedButton(
+//               onPressed: () {
+//                 _auth.authStateChanges().listen((User? user) {
+//                   if (user != null && user.emailVerified) {
+//                     Navigator.pushReplacement(
+//                       context,
+//                       MaterialPageRoute(
+//                         builder: (context) => Homepage(),
+//                       ),
+//                     );
+//                   }
+//                 });
+//               },
+//               child: Text('Email Verified'))),
+//     );
+//   }
+// }
 // class HomeScreen extends StatelessWidget {
 //   @override
 //   Widget build(BuildContext context) {

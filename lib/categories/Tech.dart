@@ -314,8 +314,8 @@ class _TechState extends State<Tech> {
                   //     .pop(true); // Allow back button press
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) =>
-                          Homepage(), // Navigate to the QuizPage
+                      builder: (context) => Homepage(
+                          enableFingerprint: true), // Navigate to the QuizPage
                     ),
                   );
                 },

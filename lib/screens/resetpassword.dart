@@ -16,7 +16,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
     try {
       await _auth.sendPasswordResetEmail(email: _emailController.text);
       setState(() {
-        _resetMessage = 'Password reset email sent. Please check your email.';
+        _resetMessage = 'Mail sent, Please check your email inbox.';
       });
     } catch (e) {
       setState(() {
@@ -33,6 +33,7 @@ class _PasswordResetPageState extends State<PasswordResetPage> {
           padding: EdgeInsets.all(20.0),
           child: SingleChildScrollView(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Lottie.asset('assets/lottie/animation_loihnj8g.json'),

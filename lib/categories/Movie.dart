@@ -324,7 +324,7 @@ class _MovieState extends State<Movie> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          Homepage(), // Navigate to the QuizPage
+                          Homepage(enableFingerprint: true), // Navigate to the QuizPage
                     ),
                   ); // Allow back button press
                 },

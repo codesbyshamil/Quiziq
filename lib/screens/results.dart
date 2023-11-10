@@ -1,4 +1,6 @@
 import 'package:Quiziq/provider/provider.dart';
+import 'package:Quiziq/screens/connectivity.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,11 +17,30 @@ List<int> userScores = [];
 List<String> storedTimes = [];
 
 class _ResultState extends State<Result> {
-  final CollectionReference Results =
+  void initstate() {
+    super.initState();
+    checkConnectivity();
+  }
+
+  final CollectionReference results =
       FirebaseFirestore.instance.collection('Results');
 
   int Index = 0;
   String sortByOption = 'Normal';
+
+  String connectionStatus = 'Unknown';
+
+  Future<void> checkConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        connectionStatus = 'No internet connection';
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => InternetCheckWidget(),
+        ));
+      });
+    } else {}
+  }
 
   Future<void> deleteAll() async {
     final collection =
@@ -86,77 +107,81 @@ class _ResultState extends State<Result> {
         ],
       ),
       body: SafeArea(
-        child: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('Results')
-              .doc(FirebaseAuth.instance.currentUser!.uid)
-              .snapshots(),
-          builder: (context, AsyncSnapshot snapshot) {
-            List results = snapshot.data!.data()!['results'];
-            if (snapshot.hasData) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Consumer<Providers>(
-                          builder: (context, Providers, child) {
-                        Providers.getCategories();
-                        Providers.getUserScores();
-                        Providers.loadStoredTimes();
-                        return ListView.builder(
-                          itemCount: results.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            var Resultssnap = results[index];
-                            return Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                decoration: ShapeDecoration(
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      width: 2,
-                                      strokeAlign:
-                                          BorderSide.strokeAlignOutside,
-                                      color: Color(0xFFA32EC1),
-                                    ),
-                                    borderRadius: BorderRadius.circular(15),
+          child: StreamBuilder<DocumentSnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection('Results')
+            .doc(FirebaseAuth.instance.currentUser!.uid)
+            .snapshots(),
+        builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (!snapshot.hasData || !snapshot.data!.exists) {
+            return Center(
+              child: Text('Results Not Found'),
+            );
+          }
+          Map<String, dynamic> userData =
+              snapshot.data!.data() as Map<String, dynamic>;
+          List results = userData['results'];
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Consumer<Providers>(
+                    builder: (context, Providers, child) {
+                      return ListView.builder(
+                        itemCount: results.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          var resultSnap = results[index];
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    width: 2,
+                                    strokeAlign: BorderSide.strokeAlignOutside,
+                                    color: Color(0xFFA32EC1),
                                   ),
-                                ),
-                                height: 80,
-                                child: ListTile(
-                                  leading: Text(
-                                    '${index + 1}',
-                                    style: TextStyle(fontSize: 25),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  title: Text('Score: ${Resultssnap['Score']}',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      )),
-                                  subtitle: Text(
-                                    'Category:\n ${Resultssnap['Category']}',
-                                    style: TextStyle(fontSize: 15),
-                                  ),
-                                  trailing: Text(
-                                    textAlign: TextAlign.right,
-                                    '${Resultssnap['Datetime']}',
-                                    style: TextStyle(fontSize: 14),
-                                  ),
+                                  borderRadius: BorderRadius.circular(15),
                                 ),
                               ),
-                            );
-                          },
-                        );
-                      }),
-                    ),
-                  ],
+                              height: 80,
+                              child: ListTile(
+                                leading: Text(
+                                  '${index + 1}',
+                                  style: TextStyle(fontSize: 25),
+                                  textAlign: TextAlign.center,
+                                ),
+                                title: Text('Score: ${resultSnap['Score']}',
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                    )),
+                                subtitle: Text(
+                                  'Category:\n ${resultSnap['Category']}',
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                                trailing: Text(
+                                  textAlign: TextAlign.right,
+                                  '${resultSnap['Datetime']}',
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-              );
-            }
-            return Container();
-          },
-        ),
-      ),
+              ],
+            ),
+          );
+        },
+      )),
     );
   }
 }

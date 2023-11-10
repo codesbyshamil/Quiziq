@@ -1,13 +1,13 @@
 import 'package:Quiziq/firebase_options.dart';
-import 'package:Quiziq/provider/provider.dart';
-import 'package:Quiziq/screens/connectivity.dart';
-// import 'package:Quiz/screens/googleauth.dart';
+import 'package:Quiziq/provider/provider.dart'; // import 'package:Quiz/screens/googleauth.dart';
 import 'package:Quiziq/screens/splashscreen.dart';
 import 'package:flutter/material.dart';
 // import 'package:Quiz/screens/splashscreen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+// ignore: unused_import
+import 'package:Quiziq/screens/push_notification_service.dart';
 // import 'package:connectivity/connectivity.dart';
 
 Future<void> main() async {
@@ -15,6 +15,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // PushNotificationService().setupPushNotifications();
   runApp(const MyApp());
 }
 

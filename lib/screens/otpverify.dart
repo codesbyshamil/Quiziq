@@ -107,7 +107,7 @@ class _MyVerifyState extends State<MyVerify> {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Homepage(),
+                          builder: (context) => Homepage(enableFingerprint: true),
                         ),
                       );
                     },

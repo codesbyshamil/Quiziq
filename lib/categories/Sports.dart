@@ -321,12 +321,12 @@ class _SportsState extends State<Sports> {
                 onPressed: () {
                   _countDownController
                       .pause(); // Pause the timer only when exiting
-                  Homepage();
+                  Homepage(enableFingerprint: true);
                   // Navigator.of(context).pop(true);
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (context) =>
-                          Homepage(), // Navigate to the QuizPage
+                          Homepage(enableFingerprint: true), // Navigate to the QuizPage
                     ),
                   ); // Allow back button press
                 },

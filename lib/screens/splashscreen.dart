@@ -32,7 +32,7 @@ class _SplashPageState extends State<SplashPage> {
 
     if (user != null) {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => Homepage()));
+          .pushReplacement(MaterialPageRoute(builder: (context) => Homepage(enableFingerprint: true)));
     } else {
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => LoginPage()));

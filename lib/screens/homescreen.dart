@@ -11,6 +11,7 @@ import 'package:Quiziq/screens/leaderboard.dart';
 //import 'package:Quiz/screens/leaderboard.dart';
 import 'package:Quiziq/screens/profilescreen.dart';
 import 'package:Quiziq/screens/results.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:Quiz/screens/test.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +21,21 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:animated_switch/animated_switch.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:Quiziq/screens/connectivity.dart';
 
 // ignore: must_be_immutable
 class Homepage extends StatefulWidget {
   @override
   State<Homepage> createState() => _HomepageState();
+  final bool enableFingerprint;
+  Homepage({required this.enableFingerprint});
 }
 
 String username = "";
 // String firstName = "";
 
 class _HomepageState extends State<Homepage> {
+  String connectionStatus = 'Unknown';
   String firstName = '';
   final LocalAuthentication auth = LocalAuthentication();
   // ignore: unused_field
@@ -53,6 +58,20 @@ class _HomepageState extends State<Homepage> {
               : _SupportState.unsupported),
         );
     _fetchUserData();
+    checkConnectivity();
+  }
+
+  Future<void> checkConnectivity() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+
+    if (connectivityResult == ConnectivityResult.none) {
+      setState(() {
+        connectionStatus = 'No internet connection';
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => InternetCheckWidget(),
+        ));
+      });
+    } else {}
   }
 
   // ignore: unused_element
@@ -92,6 +111,7 @@ class _HomepageState extends State<Homepage> {
     // }
 
     // The rest of your authentication logic remains the same.
+
     bool authenticated = false;
     try {
       setState(() {
@@ -175,6 +195,7 @@ class _HomepageState extends State<Homepage> {
     final FirebaseAuth auth = FirebaseAuth.instance;
     final User? user = auth.currentUser;
     final String? photoUrl = user?.photoURL;
+
     Provider.of<Providers>(context).getUsername();
     return FutureBuilder<int>(
         future: getTotalScoreFromSharedPreferences(),

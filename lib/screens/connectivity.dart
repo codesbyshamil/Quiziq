@@ -1,11 +1,8 @@
 import 'package:Quiziq/screens/homescreen.dart';
-import 'package:Quiziq/screens/loginscreen.dart';
 import 'package:Quiziq/screens/splashscreen.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 // class Connect extends StatelessWidget {
 //   const Connect({super.key});
@@ -52,12 +49,12 @@ class _InternetCheckWidgetState extends State<InternetCheckWidget> {
       setState(() {
         // connectionStatus = 'WiFi';
         Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => Homepage(),
+          builder: (context) => Homepage(enableFingerprint: true),
         ));
       });
     } else {
       setState(() {
-        connectionStatus = 'Errorcode: INAL';
+        connectionStatus = 'Errorcode: NOEN';
       });
     }
   }

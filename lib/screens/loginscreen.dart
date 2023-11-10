@@ -62,7 +62,9 @@ class _LoginPageState extends State<LoginPage> {
 
     if (!newUser) {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Homepage()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => Homepage(enableFingerprint: true)));
     }
   }
 
@@ -81,418 +83,430 @@ class _LoginPageState extends State<LoginPage> {
         backgroundColor: Color.fromARGB(255, 255, 255, 255),
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: EdgeInsets.only(top: 10),
-            child: Column(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Lottie.asset('assets/lottie/animation_log0v1qi (1).json',
-                        width: 250, height: 250, fit: BoxFit.cover),
-                    SizedBox(height: 20),
-                    Text(
-                      "Login",
-                      style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        color: const Color.fromARGB(255, 23, 22, 22),
+            child: Container(
+              margin: EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Lottie.asset('assets/lottie/animation_log0v1qi (1).json',
+                          width: 230, height: 220, fit: BoxFit.cover),
+                      SizedBox(height: 10),
+                      Text(
+                        "Login",
+                        style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: const Color.fromARGB(255, 23, 22, 22),
+                        ),
                       ),
-                    ),
-                    Text(
-                      errormsg,
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 183, 29, 18),
-                        fontSize: 15,
+                      Text(
+                        errormsg,
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 183, 29, 18),
+                          fontSize: 15,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: TextField(
-                        keyboardType: TextInputType.emailAddress,
-                        textAlign: TextAlign.center,
-                        onChanged: (value) {
-                          email = value;
-                          //Do something with the user input.
-                        },
-                        cursorColor: Color.fromARGB(255, 31, 30, 30),
-                        controller: usernameController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          labelText: 'Email',
-                          labelStyle: TextStyle(
-                            color: const Color.fromARGB(255, 0, 0, 0),
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: TextField(
+                          keyboardType: TextInputType.emailAddress,
+                          textAlign: TextAlign.start,
+                          onChanged: (value) {
+                            email = value;
+                            //Do something with the user input.
+                          },
+                          cursorColor: Color.fromARGB(255, 31, 30, 30),
+                          controller: usernameController,
+                          decoration: InputDecoration(
+                            fillColor: Colors.white,
+                            filled: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            labelText: 'Email',
+                            labelStyle: TextStyle(
+                              color: const Color.fromARGB(255, 0, 0, 0),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Column(
-                        children: [
-                          TextField(
-                            controller: passwordController,
-                            keyboardType: TextInputType.text,
-                            obscureText: _isPasswordHidden,
-                            textAlign: TextAlign.center,
-                            onChanged: (value) {
-                              password = value;
-                              //Do something with the user input.
-                            },
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              labelText: 'Password',
-                              labelStyle: TextStyle(
-                                color: const Color.fromARGB(255, 0, 0, 0),
-                              ),
-                              suffixIcon: IconButton(
-                                icon: _isPasswordHidden
-                                    ? Icon(Icons.visibility)
-                                    : Icon(Icons.visibility_off),
-                                onPressed: () {
-                                  setState(() {
-                                    _isPasswordHidden = !_isPasswordHidden;
-                                  });
-                                },
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Column(
+                          children: [
+                            TextField(
+                              controller: passwordController,
+                              keyboardType: TextInputType.text,
+                              obscureText: _isPasswordHidden,
+                              textAlign: TextAlign.start,
+                              onChanged: (value) {
+                                password = value;
+                                //Do something with the user input.
+                              },
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                labelText: 'Password',
+                                labelStyle: TextStyle(
+                                  color: const Color.fromARGB(255, 0, 0, 0),
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: _isPasswordHidden
+                                      ? Icon(Icons.visibility)
+                                      : Icon(Icons.visibility_off),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isPasswordHidden = !_isPasswordHidden;
+                                    });
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(right: 18),
-                                child: TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              PasswordResetPage(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 18),
+                                  child: TextButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                PasswordResetPage(),
+                                          ),
+                                        );
+                                      },
+                                      child: Text(
+                                        'Reset Password?',
+                                        style: TextStyle(color: Colors.blue),
+                                      )),
+                                )
+                              ],
+                            ),
+                            // Text(
+                            //   errormsg,
+                            //   style: TextStyle(
+                            //       color: Color.fromARGB(255, 227, 79, 69)),
+                            // ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                    child: Container(
+                                      width: 320,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: Color.fromARGB(255, 5, 5, 5)),
+                                      child: Center(
+                                        child: Text(
+                                          "LOGIN",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color.fromARGB(
+                                                255, 244, 244, 244),
+                                          ),
                                         ),
-                                      );
-                                    },
-                                    child: Text(
-                                      'Reset Password?',
-                                      style: TextStyle(color: Colors.blue),
-                                    )),
-                              )
-                            ],
-                          ),
-                          // Text(
-                          //   errormsg,
-                          //   style: TextStyle(
-                          //       color: Color.fromARGB(255, 227, 79, 69)),
-                          // ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                child: Container(
-                                  width: 150,
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(60),
-                                      color: Color.fromARGB(255, 11, 11, 11)),
-                                  child: Center(
-                                    child: Text(
-                                      "Login With OTP",
-                                      style: TextStyle(
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.bold,
-                                        color:
-                                            Color.fromARGB(255, 236, 233, 233),
+                                      ),
+                                    ),
+                                    onTap: () async {
+                                      setState(() {
+                                        showSpinner = true;
+                                      });
+                                      try {
+                                        final user = await _auth
+                                            .signInWithEmailAndPassword(
+                                                email: email,
+                                                password: password);
+                                        //ignore: msp
+                                        // ignore: unnecessary_null_comparison
+                                        if (user != null) {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => Homepage(
+                                                  enableFingerprint: true),
+                                            ),
+                                          );
+                                        }
+                                      } catch (e) {
+                                        print(e);
+                                        setState(() {
+                                          errormsg =
+                                              'Username/Password is incorrect';
+                                        });
+                                      }
+                                      setState(() {
+                                        showSpinner = false;
+                                      });
+                                    }),
+                                SizedBox(height: 10),
+                                InkWell(
+                                  child: Container(
+                                    width: 320,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: Color.fromARGB(255, 11, 11, 11)),
+                                    child: Center(
+                                      child: Text(
+                                        "Login with Mobile OTP",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Color.fromARGB(
+                                              255, 236, 233, 233),
+                                        ),
                                       ),
                                     ),
                                   ),
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => OTPScreen(),
+                                      ),
+                                    );
+                                  },
+                                  // child: Text(
+                                  //   "Login",
+                                  //   style: TextStyle(
+                                  //     color: Color.fromARGB(255, 7, 89, 231),
+                                  //   ),
+                                  // ),
                                 ),
-                                onTap: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => OTPScreen(),
-                                    ),
-                                  );
-                                },
+
                                 // child: Text(
                                 //   "Login",
                                 //   style: TextStyle(
                                 //     color: Color.fromARGB(255, 7, 89, 231),
                                 //   ),
                                 // ),
-                              ),
-                              SizedBox(width: 10),
-                              InkWell(
-                                  child: Container(
-                                    width: 150,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(60),
-                                        color: Color.fromARGB(255, 5, 5, 5)),
-                                    child: Center(
-                                      child: Text(
-                                        "LOGIN",
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color.fromARGB(
-                                              255, 244, 244, 244),
-                                        ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '____Signup with____',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 16, 16, 16),
+                          fontSize: 16,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            child: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(60),
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255)),
+                                child: Center(
+                                    child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Container(
+                                      height: 40.0,
+                                      width: 40.0,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/google.png'),
+                                            fit: BoxFit.cover),
+                                        shape: BoxShape.circle,
                                       ),
                                     ),
+                                  ],
+                                ))),
+                            onTap: () async {
+                              UserCredential? userCredential =
+                                  await signInWithGoogle();
+                              if (userCredential != true) {
+                                // Successful sign-in
+                                print(
+                                    "User signed in: ${userCredential.user!.displayName}");
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        Homepage(enableFingerprint: true),
                                   ),
-                                  onTap: () async {
-                                    setState(() {
-                                      showSpinner = true;
-                                    });
-                                    try {
-                                      final user = await _auth
-                                          .signInWithEmailAndPassword(
-                                              email: email, password: password);
-                                      // ignore: unnecessary_null_comparison
-                                      if (user != null) {
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => Homepage(),
-                                          ),
-                                        );
-                                      }
-                                    } catch (e) {
-                                      print(e);
-                                      setState(() {
-                                        errormsg =
-                                            'Username/Password is incorrect';
-                                      });
-                                    }
-                                    setState(() {
-                                      showSpinner = false;
-                                    });
-                                  }),
-
-                              // child: Text(
-                              //   "Login",
-                              //   style: TextStyle(
-                              //     color: Color.fromARGB(255, 7, 89, 231),
-                              //   ),
-                              // ),
-                            ],
+                                );
+                              } else {
+                                // Sign-in failed
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(SnackBar(
+                                  content:
+                                      Text('Failed to sign in with Google'),
+                                ));
+                                print("Failed to sign in with Google");
+                              }
+                            },
+                          ),
+                          // SizedBox(width: 10),
+                          // InkWell(
+                          //   child: Container(
+                          //       width: 50,
+                          //       height: 50,
+                          //       decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(60),
+                          //           color:
+                          //               const Color.fromARGB(255, 255, 255, 255)),
+                          //       child: Center(
+                          //           child: Row(
+                          //         mainAxisAlignment:
+                          //             MainAxisAlignment.spaceEvenly,
+                          //         children: <Widget>[
+                          //           Container(
+                          //             height: 30.0,
+                          //             width: 30.0,
+                          //             decoration: BoxDecoration(
+                          //               image: DecorationImage(
+                          //                   image: AssetImage(
+                          //                       'assets/images/apple.png'),
+                          //                   fit: BoxFit.cover),
+                          //               shape: BoxShape.circle,
+                          //             ),
+                          //           ),
+                          //           // Text(
+                          //           //   'Sign in with Google',
+                          //           //   style: TextStyle(
+                          //           //       fontSize: 16.0,
+                          //           //       fontWeight: FontWeight.bold,
+                          //           //       color: Color.fromARGB(255, 0, 0, 0)),
+                          //           // ),
+                          //         ],
+                          //       ))),
+                          //   onTap: () async {
+                          //     // UserCredential? userCredential =
+                          //     //     await signInWithGoogle();
+                          //     // if (userCredential != true) {
+                          //     //   // Successful sign-in
+                          //     //   print(
+                          //     //       "User signed in: ${userCredential.user!.displayName}");
+                          //     // } else {
+                          //     //   // Sign-in failed
+                          //     //   print("Failed to sign in with Google");
+                          //     // }
+                          //   },
+                          // ),
+                          SizedBox(width: 10),
+                          InkWell(
+                            child: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(60),
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255)),
+                                child: Center(
+                                    child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Container(
+                                      height: 30.0,
+                                      width: 30.0,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/git.png'),
+                                            fit: BoxFit.cover),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    // Text(
+                                    //   'Sign in with Google',
+                                    //   style: TextStyle(
+                                    //       fontSize: 16.0,
+                                    //       fontWeight: FontWeight.bold,
+                                    //       color: Color.fromARGB(255, 0, 0, 0)),
+                                    // ),
+                                  ],
+                                ))),
+                            onTap: () async {
+                              UserCredential? userCredential =
+                                  await signInWithGitHub();
+                              if (userCredential != true) {
+                                // Successful sign-in
+                                print(
+                                    "User signed in: ${userCredential.user!.displayName}");
+                              } else {
+                                // Sign-in failed
+                                print("Failed to sign in with Google");
+                              }
+                            },
+                          ),
+                          SizedBox(width: 10),
+                          InkWell(
+                            child: Container(
+                                width: 50,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(60),
+                                    color: const Color.fromARGB(
+                                        255, 255, 255, 255)),
+                                child: Center(
+                                    child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+                                    Container(
+                                      height: 45.0,
+                                      width: 45.0,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                            image: AssetImage(
+                                                'assets/images/fb.png'),
+                                            fit: BoxFit.cover),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                  ],
+                                ))),
+                            onTap: () async {
+                              // signInWithFacebook();
+                            },
                           ),
                         ],
                       ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      '____Signup with____',
-                      style: TextStyle(
-                        color: Color.fromARGB(255, 16, 16, 16),
-                        fontSize: 16,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        InkWell(
-                          child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(60),
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255)),
-                              child: Center(
-                                  child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Container(
-                                    height: 40.0,
-                                    width: 40.0,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/google.png'),
-                                          fit: BoxFit.cover),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                ],
-                              ))),
-                          onTap: () async {
-                            UserCredential? userCredential =
-                                await signInWithGoogle();
-                            if (userCredential != true) {
-                              // Successful sign-in
-                              print(
-                                  "User signed in: ${userCredential.user!.displayName}");
-                              Navigator.pushReplacement(
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('Dont have an account?'),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => Homepage(),
+                                  builder: (context) => RegistrationScreen(),
                                 ),
                               );
-                            } else {
-                              // Sign-in failed
-                              print("Failed to sign in with Google");
-                            }
-                          },
-                        ),
-                        // SizedBox(width: 10),
-                        // InkWell(
-                        //   child: Container(
-                        //       width: 50,
-                        //       height: 50,
-                        //       decoration: BoxDecoration(
-                        //           borderRadius: BorderRadius.circular(60),
-                        //           color:
-                        //               const Color.fromARGB(255, 255, 255, 255)),
-                        //       child: Center(
-                        //           child: Row(
-                        //         mainAxisAlignment:
-                        //             MainAxisAlignment.spaceEvenly,
-                        //         children: <Widget>[
-                        //           Container(
-                        //             height: 30.0,
-                        //             width: 30.0,
-                        //             decoration: BoxDecoration(
-                        //               image: DecorationImage(
-                        //                   image: AssetImage(
-                        //                       'assets/images/apple.png'),
-                        //                   fit: BoxFit.cover),
-                        //               shape: BoxShape.circle,
-                        //             ),
-                        //           ),
-                        //           // Text(
-                        //           //   'Sign in with Google',
-                        //           //   style: TextStyle(
-                        //           //       fontSize: 16.0,
-                        //           //       fontWeight: FontWeight.bold,
-                        //           //       color: Color.fromARGB(255, 0, 0, 0)),
-                        //           // ),
-                        //         ],
-                        //       ))),
-                        //   onTap: () async {
-                        //     // UserCredential? userCredential =
-                        //     //     await signInWithGoogle();
-                        //     // if (userCredential != true) {
-                        //     //   // Successful sign-in
-                        //     //   print(
-                        //     //       "User signed in: ${userCredential.user!.displayName}");
-                        //     // } else {
-                        //     //   // Sign-in failed
-                        //     //   print("Failed to sign in with Google");
-                        //     // }
-                        //   },
-                        // ),
-                        SizedBox(width: 10),
-                        InkWell(
-                          child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(60),
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255)),
-                              child: Center(
-                                  child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Container(
-                                    height: 30.0,
-                                    width: 30.0,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/git.png'),
-                                          fit: BoxFit.cover),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  // Text(
-                                  //   'Sign in with Google',
-                                  //   style: TextStyle(
-                                  //       fontSize: 16.0,
-                                  //       fontWeight: FontWeight.bold,
-                                  //       color: Color.fromARGB(255, 0, 0, 0)),
-                                  // ),
-                                ],
-                              ))),
-                          onTap: () async {
-                            UserCredential? userCredential =
-                                await signInWithGitHub();
-                            if (userCredential != true) {
-                              // Successful sign-in
-                              print(
-                                  "User signed in: ${userCredential.user!.displayName}");
-                            } else {
-                              // Sign-in failed
-                              print("Failed to sign in with Google");
-                            }
-                          },
-                        ),
-                        SizedBox(width: 10),
-                        InkWell(
-                          child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(60),
-                                  color:
-                                      const Color.fromARGB(255, 255, 255, 255)),
-                              child: Center(
-                                  child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: <Widget>[
-                                  Container(
-                                    height: 45.0,
-                                    width: 45.0,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              'assets/images/fb.png'),
-                                          fit: BoxFit.cover),
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                ],
-                              ))),
-                          onTap: () async {
-                            // signInWithFacebook();
-                          },
-                        ),
-                      ],
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Dont have an account?'),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => RegistrationScreen(),
-                              ),
-                            );
-                          },
-                          child: Text(
-                            'Signup',
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                            },
+                            child: Text(
+                              'Signup',
+                            ),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

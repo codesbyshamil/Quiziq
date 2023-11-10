@@ -1,6 +1,7 @@
 //import 'package:Quiz/screens/test.dart';
 // import 'package:Quiziq/provider/provider.dart';
 import 'package:animated_switch/animated_switch.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -18,38 +19,64 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
-  late SharedPreferences logindata;
   late String username = '';
+  late String phonenumber = '';
+
   late User? _user;
-  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
   final LocalAuthentication auth = LocalAuthentication();
   // ignore: unused_field
   bool? _canCheckBiometrics;
   bool fingerprintAuthEnabled = false;
   _SupportState _supportState = _SupportState.unknown;
+  String? _userPhoneNumber;
 
   bool isInitialized = false;
-
+  String userId = '';
   @override
   void initState() {
     super.initState();
-    initial();
     auth.isDeviceSupported().then(
           (bool isSupported) => setState(() => _supportState = isSupported
               ? _SupportState.supported
               : _SupportState.unsupported),
         );
     _fetchUserData();
+    checkPhoneNumberInFirestore(userId);
+    _checkFingerprintAuthPreference();
   }
 
-  void initial() async {
-    logindata = await SharedPreferences.getInstance();
-
+  Future<void> _checkFingerprintAuthPreference() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool enabled = prefs.getBool('fingerprint_auth_enabled') ?? false;
     setState(() {
-      username = logindata.getString('username') ?? '';
-      _usernameController.text = username;
-      isInitialized = true;
+      fingerprintAuthEnabled = enabled;
     });
+  }
+
+  Future<void> _fetchUserData() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    _user = auth.currentUser;
+    setState(() {}); // Update the UI after fetching user data
+  }
+
+  Future<void> SaveNumber(String userId, int phoneNumber) async {
+    final userDoc =
+        FirebaseFirestore.instance.collection('Results').doc(userId);
+    final userDocSnap = await userDoc.get();
+
+    if (!userDocSnap.exists) {
+      await userDoc.set({
+        'PhoneNumber': '${_phoneController.text}',
+      });
+    } else {
+      await userDoc.update({
+        'PhoneNumber': '${_phoneController.text}',
+      });
+    }
+
+    // After saving, update the UI to reflect the changes
+    await checkPhoneNumberInFirestore(userId);
   }
 
   Future<void> _checkBiometrics() async {
@@ -73,18 +100,21 @@ class _ProfileState extends State<Profile> {
     print('fingerprint enabled');
   }
 
-  void saveUsername() {
-    String newUsername = _usernameController.text;
-    logindata.setString('username', newUsername);
-    setState(() {
-      username = newUsername;
-    });
-  }
+  Future<void> checkPhoneNumberInFirestore(String userId) async {
+    // Replace 'Results' with the actual name of your Firestore collection
+    // and 'document_id' with the actual document ID
+    DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore
+        .instance
+        .collection('Results')
+        .doc(userId)
+        .get();
 
-  Future<void> _fetchUserData() async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    _user = auth.currentUser;
-    setState(() {}); // Update the UI after fetching user data
+    // Check if the document exists and contains a phone number
+    if (snapshot.exists) {
+      setState(() {
+        _userPhoneNumber = snapshot.data()?['PhoneNumber'];
+      });
+    }
   }
 
   void saveFingerprintAuthPreference(bool enabled) async {
@@ -110,11 +140,13 @@ class _ProfileState extends State<Profile> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Change Username'),
+          title: Text(_user?.phoneNumber != null
+              ? 'Change Mobile number'
+              : 'Add Mobile number'),
           content: TextFormField(
-            controller: _usernameController,
+            controller: _phoneController,
             decoration: InputDecoration(
-              labelText: 'New Username',
+              labelText: 'Mobile Number',
             ),
           ),
           actions: <Widget>[
@@ -126,8 +158,15 @@ class _ProfileState extends State<Profile> {
             ),
             TextButton(
               onPressed: () {
-                saveUsername();
+                User? user = FirebaseAuth.instance.currentUser;
+                if (user != null) {
+                  setState(() {
+                    SaveNumber(user.uid, hashCode);
+                  });
+                } else {}
                 Navigator.of(context).pop();
+
+                print('Error');
               },
               child: Text('Save'),
             ),
@@ -270,6 +309,7 @@ class _ProfileState extends State<Profile> {
                                 fingerprintAuthEnabled = Value;
                                 // Save the preference to shared preferences.
                                 saveFingerprintAuthPreference(Value);
+                                
                               });
                             },
                           ),
@@ -292,7 +332,9 @@ class _ProfileState extends State<Profile> {
                           children: [
                             Icon(Icons.person),
                             Text(
-                              'Change Username',
+                              _userPhoneNumber != null
+                                  ? 'Change Mobile number'
+                                  : 'Add Mobile number',
                               style: TextStyle(
                                   color: const Color.fromARGB(255, 20, 20, 20)),
                             ),
@@ -303,7 +345,6 @@ class _ProfileState extends State<Profile> {
                   ),
                   TextButton(
                     onPressed: () {
-                      logindata.setBool('login', true);
                       Navigator.pushAndRemoveUntil<void>(
                         context,
                         MaterialPageRoute<void>(
