@@ -38,7 +38,7 @@ Follow these steps to run the app locally:
    flutter run
 
 ### Screenshots 📷
-[pic](https://github.com/codesbyshamil/new9/assets/96049738/2b9562b1-f655-4a14-be87-d99bfc4d1dab)
+![pic](https://github.com/codesbyshamil/new9/assets/96049738/2b9562b1-f655-4a14-be87-d99bfc4d1dab)
 
 ### Contributions 🤝
 Contributions are welcome! If you'd like to contribute to the project, follow these steps:
