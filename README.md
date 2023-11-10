@@ -38,7 +38,7 @@ Follow these steps to run the app locally:
    flutter run
 
 ### Screenshots 📷
-[pic](https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.openapis.org%2Fwp-content%2Fuploads%2Fsites%2F3%2F2021%2F12%2Freadme-blue.png&tbnid=5yE881Py5aBsgM&vet=12ahUKEwjv8IGFnbmCAxXZa2wGHci2CF0QMygjegUIARC8AQ..i&imgrefurl=https%3A%2F%2Fwww.openapis.org%2Fblog%2F2021%2F12%2F09%2Freadme-api-documentation-hub-joins-openapi-initiative&docid=BNhEeOsb1Op-UM&w=2778&h=503&q=readme&ved=2ahUKEwjv8IGFnbmCAxXZa2wGHci2CF0QMygjegUIARC8AQ "Optional title")
+[pic](https://www.google.com/imgres?imgurl=https%3A%2F%2Fwww.openapis.org%2Fwp-content%2Fuploads%2Fsites%2F3%2F2021%2F12%2Freadme-blue.png&tbnid=5yE881Py5aBsgM&vet=12ahUKEwjv8IGFnbmCAxXZa2wGHci2CF0QMygjegUIARC8AQ..i&imgrefurl=https%3A%2F%2Fwww.openapis.org%2Fblog%2F2021%2F12%2F09%2Freadme-api-documentation-hub-joins-openapi-initiative&docid=BNhEeOsb1Op-UM&w=2778&h=503&q=readme&ved=2ahUKEwjv8IGFnbmCAxXZa2wGHci2CF0QMygjegUIARC8AQ)
 
 ### Contributions 🤝
 Contributions are welcome! If you'd like to contribute to the project, follow these steps:
