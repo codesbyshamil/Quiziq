@@ -38,7 +38,7 @@ Follow these steps to run the app locally:
    flutter run
 
 ### Screenshots 📷
-<img src="/assets/Screenshot/1.jpeg" width="230" height="500">  <img src="/assets/Screenshot/3.jpeg" width="230" height="500">  <img src="/assets/Screenshot/5.jpeg" width="230" height="500"> <img src="/assets/Screenshot/4.jpeg" width="230" height="500">
+<img src="/assets/Screenshot/1.jpeg" width="230" height="500">  <img src="/assets/Screenshot/3.jpeg" width="230" height="500">  <img src="/assets/Screenshot/4.jpeg" width="230" height="500">  <img src="/assets/Screenshot/5.jpeg" width="230" height="500"> 
 
 ### Contributions 🤝
 Contributions are welcome! If you'd like to contribute to the project, follow these steps:
