@@ -14,7 +14,6 @@ QuizIQ is a feature-rich quiz mobile application developed using Flutter. It off
 - **Flutter:** 📱 Framework for building the mobile application.
 - **Firebase:** 🔐 Integration for user authentication and data storage.
 - **Local Authentication:** 👆🔑 Utilized for fingerprint authentication.
-- **Other Flutter Libraries:** [Insert other significant libraries or tools used in the development process]
 
 ## Getting Started 🚀
 
@@ -31,14 +30,13 @@ Follow these steps to run the app locally:
    ```bash
    git clone https://github.com/your-username/QuizIQ.git
 
-### Usage
-1. Connect your device/emulator.
-2. Run the app:
+2. Connect your device/emulator.
+3. Run the app:
    ```bash
    flutter run
 
 ### Screenshots 📷
-[Include app screenshots here to showcase different features and functionalities]
+<img src="/assets/Screenshot/1.jpeg" width="230" height="500">  <img src="/assets/Screenshot/3.jpeg" width="230" height="500">  <img src="/assets/Screenshot/4.jpeg" width="230" height="500">  <img src="/assets/Screenshot/5.jpeg" width="230" height="500"> 
 
 ### Contributions 🤝
 Contributions are welcome! If you'd like to contribute to the project, follow these steps:
@@ -51,8 +49,3 @@ Push to the branch (git push origin feature/awesome-feature).
 Create a Pull Request.
 License 📜
 This project is licensed under the [License Name] - see the LICENSE.md file for details.
-
-### Acknowledgements 🙌
-[Optional: Acknowledge individuals, resources, or projects that inspired or helped you during the development.]
-
-Feel free to update this README with additional details, instructions, or sections as needed.
