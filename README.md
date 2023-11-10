@@ -39,6 +39,7 @@ Follow these steps to run the app locally:
 
 ### Screenshots 📷
 ![pic](/assets/Screenshot/1.jpeg | width=100)
+<img src="/assets/Screenshot/1.jpeg" width="100" height="100">
 
 ### Contributions 🤝
 Contributions are welcome! If you'd like to contribute to the project, follow these steps:
