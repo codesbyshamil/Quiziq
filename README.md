@@ -38,7 +38,7 @@ Follow these steps to run the app locally:
    flutter run
 
 ### Screenshots 📷
-![pic](/assets/Screenshot/1.jpeg)
+![pic](/assets/Screenshot/1.jpeg | width=100)
 
 ### Contributions 🤝
 Contributions are welcome! If you'd like to contribute to the project, follow these steps:
