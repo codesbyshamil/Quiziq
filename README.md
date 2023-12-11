@@ -37,8 +37,8 @@ Follow these steps to run the app locally:
 
 ### Screenshots 📷
 
-<img src="/assets/Screenshot/1.jpeg" width="100" height="200"> <img src="/assets/Screenshot/9.jpg" width="100" height="200"> <img src="/assets/Screenshot/3.jpeg" width="100" height="200">  <img src="/assets/Screenshot/4.jpeg" width="100" height="200">
-<img src="/assets/Screenshot/10.jpg" width="100" height="200">  <img src="/assets/Screenshot/6.jpg" width="100" height="200">   <img src="/assets/Screenshot/11.jpg" width="100" height="200">   <img src="/assets/Screenshot/8.jpg" width="100" height="200"> 
+<img src="/assets/Screenshot/1.jpeg" width="100" height="200"> <img src="/assets/Screenshot/9.jpg" width="100" height="200"> <img src="/assets/Screenshot/3.jpeg" width="100" height="200"> <img src="/assets/Screenshot/4.jpeg" width="100" height="200">
+<img src="/assets/Screenshot/10.jpg" width="100" height="200"> <img src="/assets/Screenshot/6.jpg" width="100" height="200"> <img src="/assets/Screenshot/11.jpg" width="100" height="200"> <img src="/assets/Screenshot/8.jpg" width="100" height="200"> 
 
 ### Contributions 🤝
 Contributions are welcome! If you'd like to contribute to the project, follow these steps:
